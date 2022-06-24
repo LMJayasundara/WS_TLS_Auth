@@ -9,12 +9,17 @@ const server = new https.createServer({
     fs.readFileSync(`${__dirname}/key/client-ca-crt.pem`)
   ],
   requestCert: true,
-  rejectUnauthorized: true
+  rejectUnauthorized: true,
+  secureProtocol: 'TLS_method',
+  ciphers: 'AES128-GCM-SHA256:AES256-GCM-SHA384:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-GCM-SHA384',
+  ecdhCurve: 'secp521r1:secp384r1',
+  honorCipherOrder: true
 });
 
 const wss = new WebSocket.Server({
   server,
   verifyClient: (info) => {
+    // console.log(info.req.client);
     var success = !!info.req.client.authorized;
     console.log(success);
     return true;

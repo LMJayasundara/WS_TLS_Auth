@@ -7,6 +7,8 @@ const fs = require('fs');
 const ws = new WebSocket('wss://localhost:8080',{
   key: fs.readFileSync(`${__dirname}/key/client-key.pem`),
   cert: fs.readFileSync(`${__dirname}/key/client-crt.pem`),
+
+  // To enable security option 2, comment out the ca certificate and change the rejectUnauthorized: false
   ca: [
     fs.readFileSync(`${__dirname}/key/server-ca-crt.pem`)
   ],
